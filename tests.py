@@ -1,7 +1,7 @@
 import unittest
 import json
 
-import jsman
+import mdnman
 
 
 class TestSequenceFunctions(unittest.TestCase):
@@ -13,21 +13,29 @@ class TestSequenceFunctions(unittest.TestCase):
 
         def test_search(self):
             query = "for"
-            result = jsman.search(query)
+            result = mdnman.search(query)
             self.assertTrue(len(result['documents']) > 0)
             self.assertEqual("for", result['documents'][0]['title'])
 
             query = "for of"
-            result = jsman.search(query)
+            result = mdnman.search(query)
             self.assertTrue(len(result['documents']) > 0)
             self.assertEqual("for...of", result['documents'][0]['title'])
 
         def test_get_first_result(self):
             data =self.searchresult
-            title, url = jsman.getFirstResult(data)
+            title, url = mdnman.getFirstResult(data)
             self.assertEqual("for...of", title)
             self.assertEqual("https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of",
                              url)
+
+        def test_get_first_result_not_found(self):
+            with open('testdata_notfound.json') as f:
+                data = json.loads(f.read())
+
+            title, url = mdnman.getFirstResult(data)
+            self.assertEqual("Not Found", title)
+            self.assertEqual(None , url)
 
 
 if __name__ == '__main__':

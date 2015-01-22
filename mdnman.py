@@ -5,6 +5,7 @@ import sys
 import os
 import platform
 
+
 def search(query):
     query = query.replace(" ", "\%20")
     baseurl = "https://developer.mozilla.org/en-US/search?format=json&q="
@@ -14,6 +15,8 @@ def search(query):
 
 
 def getFirstResult(searchResult):
+    if len(searchResult['documents']) == 0:
+        return ("Not Found", None)
     firstEntry = searchResult['documents'][0]
     return (firstEntry['title'], firstEntry['url'])
 
