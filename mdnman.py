@@ -22,6 +22,9 @@ def getFirstResult(searchResult):
 
 
 def openUrl(url):
+    if url is None:
+        return
+
     if platform.system() == 'Darwin':
         os.system("open " + url)
     else:
@@ -33,9 +36,12 @@ def main():
     print "Searching \"" + query + "\"..."
     result = search(query)
     title, url = getFirstResult(result)
-    print "Found: " + title
-    print url
-    openUrl(url)
+    if url is None:
+        print title
+    else:
+        print "Found: " + title
+        print url
+        openUrl(url)
 
 if __name__ == '__main__':
     main()
