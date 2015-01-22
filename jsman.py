@@ -3,7 +3,7 @@ import urllib2
 import json
 import sys
 import os
-
+import platform
 
 def search(query):
     query = query.replace(" ", "\%20")
@@ -19,7 +19,10 @@ def getFirstResult(searchResult):
 
 
 def openUrl(url):
-    os.system("firefox " + url)
+    if platform.system() == 'Darwin':
+        os.system("open " + url)
+    else:
+        os.system("firefox " + url)
 
 
 def main():
