@@ -4,6 +4,7 @@ import json
 import sys
 import os
 import platform
+import webbrowser
 
 
 def search(query):
@@ -20,17 +21,6 @@ def getFirstResult(searchResult):
     firstEntry = searchResult['documents'][0]
     return (firstEntry['title'], firstEntry['url'])
 
-
-def openUrl(url):
-    if url is None:
-        return
-
-    if platform.system() == 'Darwin':
-        os.system("open " + url)
-    else:
-        os.system("firefox " + url)
-
-
 def main():
     query = " ".join(sys.argv[1:])
     print "Searching \"" + query + "\"..."
@@ -42,6 +32,7 @@ def main():
         print "Found: " + title
         print url
         openUrl(url)
+        webbrowser.open(url)
 
 if __name__ == '__main__':
     main()
